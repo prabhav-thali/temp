@@ -529,7 +529,7 @@ _**General Notes:**_
 		```
 		_**Note:** Leave the tag as amd64 otherwise we need to create local helm charts._
 		
-	*   Build the image `openfaas/of-watchdog:0.5.3`
+*  #### Build the image `openfaas/of-watchdog:0.5.3`
         ```shell
 		go get github.com/openfaas-incubator/of-watchdog
 		cd $GOPATH/src/github.com/openfaas-incubator/of-watchdog
