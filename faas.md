@@ -572,18 +572,18 @@ _**General Notes:**_
 *  #### Build the `openfaas-fn` images
 
    _**Note:** These instructions assume that you have a Gitlab instance serving modified Templates compatible with s390x architecture.  These modifications to templates include replacing `openfaas/classic-watchdog:0.13.4` instances in Dockerfiles with s390x compiled `fwatchdog`.  In the below instructions replace the <git_URL> with your project instance eg. http://my.gitlab/username/s390xtemplates.git._   
+   
 	*   Build image `functions/of-git-tar`
-		```shell
+        ```shell
 		cd $GOPATH/src/github.com/openfaas/openfaas-cloud/git-tar
 		rm -rf template/
-cp /usr/bin/faas-cli .
-cp /usr/bin/fwatchdog .		
-sed -i '4,6d' Dockerfile
-sed -i '2iCOPY faas-cli /usr/local/bin/faas-cli' Dockerfile
-sed -i '3iCOPY fwatchdog /usr/bin/fwatchdog' Dockerfile
-		
-	faas-cli build --image  functions/of-git-tar:0.12.2 --lang Dockerfile --handler . --name git-tars 
-		```
+		cp /usr/bin/faas-cli .
+		cp /usr/bin/fwatchdog .		
+		sed -i '4,6d' Dockerfile
+		sed -i '2iCOPY faas-cli /usr/local/bin/faas-cli' Dockerfile
+		sed -i '3iCOPY fwatchdog /usr/bin/fwatchdog' Dockerfile
+		faas-cli build --image  functions/of-git-tar:0.12.2 --lang Dockerfile --handler . --name git-tars 
+        ```
 	*   Build image `functions/of-buildshiprun`		
         ```shell
 		cd $GOPATH/src/github.com/openfaas/openfaas-cloud/buildshiprun
