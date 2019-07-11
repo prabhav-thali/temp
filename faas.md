@@ -530,7 +530,8 @@ _**General Notes:**_
 		_**Note:** Leave the tag as amd64 otherwise we need to create local helm charts._
 		
 *  #### Build the image `openfaas/of-watchdog:0.5.3`
-        ```shell
+	*   Download the source code
+	    ```shell
 		go get github.com/openfaas-incubator/of-watchdog
 		cd $GOPATH/src/github.com/openfaas-incubator/of-watchdog
 		git checkout 0.5.3
@@ -569,8 +570,6 @@ _**General Notes:**_
         ```	
 *  #### Build the `openfaas-fn` images
 
-   _**Note:** These instructions assume that you have a Gitlab instance serving modified Templates compatible with s390x architecture.  These modifications to templates include replacing `openfaas/classic-watchdog:0.13.4` instances in Dockerfiles with s390x compiled `fwatchdog`.  In the below instructions replace the <git_URL> with your project instance eg. http://my.gitlab/username/s390xtemplates.git._   
-   
 	*   Build image `functions/of-git-tar`
         ```shell
 		cd $GOPATH/src/github.com/openfaas/openfaas-cloud/git-tar
