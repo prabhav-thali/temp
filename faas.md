@@ -9,7 +9,7 @@ _**General Notes:**_
 
 ### Prerequisites 
  * Docker 18.06.2
- * Kubernetes Cluster v1.13.2 Setup
+ * Kubernetes Cluster Setup
 
 ### Step 1: Install dependencies
 
@@ -94,11 +94,11 @@ _**General Notes:**_
 *  #### Build the image `openfaas/faas-swarm`
 
 	*   Download the source code
-           ```shell
-		   go get -d github.com/openfaas/faas-swarm
-           cd $GOPATH/src/github.com/openfaas/faas-swarm
-           git checkout 0.6.2
-		   ```
+        ```shell
+        go get -d github.com/openfaas/faas-swarm
+        cd $GOPATH/src/github.com/openfaas/faas-swarm
+        git checkout 0.6.2
+        ```
 	*   Modify the `Dockerfile` 
            ```shell	
 		   sed -i 's/RUN license-check/#RUN license-check/g' Dockerfile
@@ -124,8 +124,6 @@ _**General Notes:**_
 			docker build -f Dockerfile -t prom/prometheus:v2.7.1-s390x .
 		   ```
 
-
-
 *  #### Build the image `openfaas/queue-worker`
 
 	*   Download the source code
@@ -138,7 +136,6 @@ _**General Notes:**_
            ```shell	   
 		   docker build -f Dockerfile -t openfaas/queue-worker:0.7.2-s390x .
 		   ```
-
 
 *  #### Build the image `prom/alertmanager`
 
@@ -189,10 +186,9 @@ _**General Notes:**_
 		sed -i '/window/a RUN CGO_ENABLED=0 GOOS=linux   GOARCH=s390x go build -v -a -tags netgo -installsuffix netgo -ldflags "-s -w -X github.com/nats-io/nats-streaming-server/version.GITCOMMIT=`git rev-parse --short HEAD`" -o pkg/linux-s390x/nats-streaming-server && cp pkg/linux-s390x/nats-streaming-server /' Dockerfile
         ```
 	*   Build the image
-        ```shell	 		
+           ```shell	 		
 		docker build -f Dockerfile -t nats-streaming:0.11.2-s390x .
-		```
-
+		   ```
 
 *  #### Build the `faas-cli` binary & `openfaas/faas-cli` image
 	*   Download the source code
@@ -291,17 +287,19 @@ _**General Notes:**_
 		tar -xzvf helm-v2.13.1-linux-s390x.tar.gz && cp linux-s390x/tiller . && cp linux-s390x/helm .
         cp linux-s390x/helm /usr/bin
 		rm -rf helm-v2.13.1-linux-s390x.tar.gz linux-s390x/
-		```
+	    ```
 	*   Build the image
-        ```shell	
+	    ```shell	
 		docker build -f Dockerfile -t gcr.io/kubernetes-helm/tiller:v2.13.1 .
-		```
-        ```shell
+	    ```
+	*	Initialize Helm
+	    ```shell
 		kubectl create clusterrolebinding tiller-cluster-admin \
- 		   --clusterrole=cluster-admin \
- 		   --serviceaccount=kube-system:default
- 		helm init --tiller-image gcr.io/kubernetes-helm/tiller:v2.13.1
-        ```
+		--clusterrole=cluster-admin \
+		--serviceaccount=kube-system:default
+		helm init --tiller-image gcr.io/kubernetes-helm/tiller:v2.13.1
+	    ```
+	    
 *  #### Build the image `openfaas/faas-netes`
 	*   Download the source code
            ```shell
@@ -722,6 +720,22 @@ _**General Notes:**_
 		+sed -i 's/Always/IfNotPresent/g' yaml/core/edge-router-dep.yml
 		+sed -i 's/Always/IfNotPresent/g' yaml/core/of-builder-dep.yml
 		```
+	*	Apply the below patch to `templates/stack.yml`
+		```diff
+		diff --git a/templates/stack.yml b/templates/stack.yml
+		index d877f83..ede557c 100644
+		--- a/templates/stack.yml
+		+++ b/templates/stack.yml
+		@@ -49,7 +49,7 @@ functions:
+		   git-tar:
+		     lang: dockerfile
+		     handler: ./git-tar
+		-    image: functions/of-git-tar:0.13.0
+		+    image: functions/of-git-tar:0.12.2
+		     labels:
+		       openfaas-cloud: "1"
+		       role: openfaas-system
+		```
 	*	Apply the below patch to `scripts/create-tiller.sh`
 		```diff
 		diff --git a/scripts/create-tiller.sh b/scripts/create-tiller.sh
@@ -733,7 +747,8 @@ _**General Notes:**_
 		-
 		-helm init --skip-refresh --upgrade --service-account tiller
 		+helm init --skip-refresh  --service-account tiller
-		```
+		```		
+		
 	*	Apply the below patch to `scripts/export-sealed-secret-pubcert.sh`
 		```diff
 		diff --git a/scripts/export-sealed-secret-pubcert.sh b/scripts/export-sealed-secret-pubcert.sh
