@@ -692,7 +692,7 @@ _**General Notes:**_
          else
             #  Disable auth service by pointing the router at the echo function:
         -    sed s/auth.openfaas/echo.openfaas-fn/g ./tmp/openfaas-cloud/yaml/core/edge-router-dep.yml | kubectl    apply -f -
-        +    sed 's/edge-auth.openfaas/echo.openfaas-fn/g' ./tmp/openfaas-cloud/yaml/core/edge-router-dep.yml |     kubectl apply -f -
+        +    sed 's/edge-auth.openfaas/echo.openfaas-fn/g' ./tmp/openfaas-cloud/yaml/core/edge-router-dep.yml | kubectl apply -f -
          fi
          kubectl apply -f ./tmp/openfaas-cloud/yaml/core/edge-router-svc.yml
         
