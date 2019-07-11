@@ -585,87 +585,81 @@ sed -i '3iCOPY fwatchdog /usr/bin/fwatchdog' Dockerfile
 	faas-cli build --image  functions/of-git-tar:0.12.2 --lang Dockerfile --handler . --name git-tars 
 		```
 	*   Build image `functions/of-buildshiprun`		
-		```shell
-		
-cd $GOPATH/src/github.com/openfaas/openfaas-cloud/buildshiprun
-faas-cli build --image functions/of-buildshiprun:0.11.1 --lang go --handler . --name buildshiprun
+        ```shell
+		cd $GOPATH/src/github.com/openfaas/openfaas-cloud/buildshiprun
+		faas-cli build --image functions/of-buildshiprun:0.11.1 --lang go --handler . --name buildshiprun
 ```
 	*   Build image `functions/github-event`		
-		```shell
-cd $GOPATH/src/github.com/openfaas/openfaas-cloud/github-event
-faas-cli build --image functions/github-event:0.8.0 --lang go --handler . --name github-event
+        ```shell
+		cd $GOPATH/src/github.com/openfaas/openfaas-cloud/github-event
+		faas-cli build --image functions/github-event:0.8.0 --lang go --handler . --name github-event
 		
 		```		
 	*   Build image `functions/import-secrets`		
-		```shell	
-cd $GOPATH/src/github.com/openfaas/openfaas-cloud/import-secrets
-faas-cli build --image functions/import-secrets:0.3.3 --lang go --handler . --name import-secrets	
+        ```shell	
+		cd $GOPATH/src/github.com/openfaas/openfaas-cloud/import-secrets
+		faas-cli build --image functions/import-secrets:0.3.3 --lang go --handler . --name import-secrets	
 		```
 	*   Build image `functions/system-metrics`		
-		```shell
-
-cd $GOPATH/src/github.com/openfaas/openfaas-cloud/system-metrics
-faas-cli build --image functions/system-metrics:0.1.1 --lang go --handler . --name system-metrics		
+        ```shell
+		cd $GOPATH/src/github.com/openfaas/openfaas-cloud/system-metrics
+		faas-cli build --image functions/system-metrics:0.1.1 --lang go --handler . --name system-metrics		
    ```
 		
 	*   Build image `functions/github-status`		
-		```shell	
-cd $GOPATH/src/github.com/openfaas/openfaas-cloud/github-status
-faas-cli build --image functions/github-status:0.3.6 --lang go --handler . --name github-status
+        ```shell	
+		cd $GOPATH/src/github.com/openfaas/openfaas-cloud/github-status
+		faas-cli build --image functions/github-status:0.3.6 --lang go --handler . --name github-status
 		```
 	*   Build image `functions/garbage-collect`		
-		```shell	
-cd $GOPATH/src/github.com/openfaas/openfaas-cloud/garbage-collect
-faas-cli build --image functions/garbage-collect:0.4.4 --lang go --handler . --name garbage-collect	
+        ```shell	
+		cd $GOPATH/src/github.com/openfaas/openfaas-cloud/garbage-collect
+		faas-cli build --image functions/garbage-collect:0.4.4 --lang go --handler . --name garbage-collect	
     ```
 	*   Build image `functions/pipeline-log:0.3.3`		
-		```shell
-cd $GOPATH/src/github.com/openfaas/openfaas-cloud/pipeline-log
-faas-cli build --image  functions/pipeline-log:0.3.3 --lang go --handler . --name pipeline-log		
+        ```shell
+		cd $GOPATH/src/github.com/openfaas/openfaas-cloud/pipeline-log
+		faas-cli build --image  functions/pipeline-log:0.3.3 --lang go --handler . --name pipeline-log		
     ```
 	*   Build image `functions/github-push`		
-		```shell	
-cd $GOPATH/src/github.com/openfaas/openfaas-cloud/github-push
-faas-cli build --image  functions/github-push:0.7.3 --lang go --handler . --name github-push		
+        ```shell	
+		cd $GOPATH/src/github.com/openfaas/openfaas-cloud/github-push
+		faas-cli build --image  functions/github-push:0.7.3 --lang go --handler . --name github-push		
 		```
 	*   Build image `functions/audit-event`		
-		```shell
-cd $GOPATH/src/github.com/openfaas/openfaas-cloud/audit-event
-faas-cli build --image functions/audit-event:0.1.2 --lang go --handler . --name audit-event		
+        ```shell
+		cd $GOPATH/src/github.com/openfaas/openfaas-cloud/audit-event
+		faas-cli build --image functions/audit-event:0.1.2 --lang go --handler . --name audit-event		
 		```
 	*   Build image `functions/list-functions`		
-		```shell
-cd $GOPATH/src/github.com/openfaas/openfaas-cloud/list-functions
-faas-cli build --image functions/list-functions:0.4.7 --lang go --handler . --name list-functions
+        ```shell
+		cd $GOPATH/src/github.com/openfaas/openfaas-cloud/list-functions
+		faas-cli build --image functions/list-functions:0.4.7 --lang go --handler . --name list-functions
 			
 		```
-		
 	*   Build image `functions/of-cloud-dashboard`		
-		```shell
-cd $GOPATH/src/github.com/openfaas/openfaas-cloud/dashboard
-make
-faas-cli template pull https://github.com/openfaas-incubator/node10-express-template	
-faas-cli build --image functions/of-cloud-dashboard:0.4.3 --lang node --handler . --name dashboard	
+        ```shell
+		cd $GOPATH/src/github.com/openfaas/openfaas-cloud/dashboard
+		make
+		faas-cli template pull https://github.com/openfaas-incubator/node10-express-template	
+		faas-cli build --image functions/of-cloud-dashboard:0.4.3 --lang node --handler . --name dashboard	
 		```
-
 	*   Build image `functions/gitlab-status`		
-		```shell
-cd $GOPATH/src/github.com/openfaas/openfaas-cloud/gitlab-status
-faas-cli build --image functions/gitlab-status:0.1.1 --lang go --handler . --name gitlab-status		
-		
-		```
+        ```shell
+		cd $GOPATH/src/github.com/openfaas/openfaas-cloud/gitlab-status
+		faas-cli build --image functions/gitlab-status:0.1.1 --lang go --handler . --name gitlab-status		
+        ```
 
 	*   Build image `functions/gitlab-push`		
-		```shell
-cd $GOPATH/src/github.com/openfaas/openfaas-cloud/gitlab-push
-faas-cli build --image functions/gitlab-push:0.2.1 --lang go --handler . --name gitlab-push		
-		```
-		
+        ```shell
+		cd $GOPATH/src/github.com/openfaas/openfaas-cloud/gitlab-push
+		faas-cli build --image functions/gitlab-push:0.2.1 --lang go --handler . --name gitlab-push		
+        ```	
 	*   Build image `functions/gitlab-event`		
-		```shell
-cd $GOPATH/src/github.com/openfaas/openfaas-cloud/gitlab-event
-faas-cli build --image functions/gitlab-event:0.1.2 --lang go --handler . --name gitlab-event		
-		```
+        ```shell
+		cd $GOPATH/src/github.com/openfaas/openfaas-cloud/gitlab-event
+		faas-cli build --image functions/gitlab-event:0.1.2 --lang go --handler . --name gitlab-event		
+        ```
 		
 *  #### Build image `functions/alpine`		
 
