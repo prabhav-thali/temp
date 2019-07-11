@@ -286,6 +286,7 @@ _**General Notes:**_
 		cd rootfs && wget https://storage.googleapis.com/kubernetes-helm/helm-v2.13.1-linux-s390x.tar.gz
 		tar -xzvf helm-v2.13.1-linux-s390x.tar.gz && cp linux-s390x/tiller . && cp linux-s390x/helm .
         cp linux-s390x/helm /usr/bin
+		cp linux-s390x/tiller /usr/bin
 		rm -rf helm-v2.13.1-linux-s390x.tar.gz linux-s390x/
 	    ```
 	*   Build the image
@@ -826,7 +827,6 @@ _**General Notes:**_
    
 	* _Ensure you have a private Docker registry setup to hold OpenFaas functions deployed by the OpenFaas Cloud pipeline._
 	* _Gitlab acount to host your OpenFaaS functions and appropriate Hooks to trigger the build._
-	* _An internal server to serve required binaries and Helm charts for the installation_
 	* _A DNS server as required by OpenFaas Cloud installation_
     
 	_Once all the required images have been built by preceding steps and init.yaml file has been created as per_ _ofc-bootstarp [instructions](https://github.com/openfaas-incubator/ofc-bootstrap#create-your-own-inityaml), you can start the deployment as follows:_
