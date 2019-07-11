@@ -119,18 +119,6 @@ _**General Notes:**_
 			mkdir -p Prometheus && cd Prometheus
 			wget https://raw.githubusercontent.com/linux-on-ibm-z/dockerfile-examples/master/Prometheus/Dockerfile
 		   ```
-    *   Modify the `Dockerfile` as  below
-		```diff
-		--- Dockerfile  2019-06-07 06:59:06.372589452 +0000
-		+++ Dockerfile.prom-s390x       2019-06-03 13:15:24.893720284 +0000
-		@@ -54,5 +54,5 @@
-		 #Export port
-		 EXPOSE 9090
-		 VOLUME [ "/prometheus" ]
-		-
-		+ENTRYPOINT [ "/prometheus/prometheus" ]
-		 CMD prometheus --config.file=/etc/prometheus/prometheus.yml --web.console.libraries=/etc/prometheus/console_libraries --web.console.templates=/etc/prometheus/consoles
-		```
 	*   Build the image
            ```shell	   
 			docker build -f Dockerfile -t prom/prometheus:v2.7.1-s390x .
@@ -794,25 +782,25 @@ faas-cli build --image functions/gitlab-event:0.1.2 --lang go --handler . --name
 		 helm upgrade openfaas --install openfaas/openfaas \
 		 ```
 
-   * Add the file `minio-sa.yml` in `ofc-bootstrap/scripts`
-```shell
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  namespace: openfaas
-  name: cloud-minio
-```
+	*	Add the file `minio-sa.yml` in `ofc-bootstrap/scripts`
+		```shell
+		apiVersion: v1
+		kind: ServiceAccount
+		metadata:
+		  namespace: openfaas
+		  name: cloud-minio
+		```
   	*	Apply the below patch to `scripts/install-minio.sh`
-```diff
-@@ -3,6 +3,7 @@
- export ACCESS_KEY=$(kubectl get secret -n openfaas-fn s3-access-key -o jsonpath='{.data.s3-access-key}'| base64 --decode)
- export SECRET_KEY=$(kubectl get secret -n openfaas-fn s3-secret-key -o jsonpath='{.data.s3-secret-key}'| base64 --decode)
+		```diff
+		@@ -3,6 +3,7 @@
+		 export ACCESS_KEY=$(kubectl get secret -n openfaas-fn s3-access-key -o jsonpath='{.data.s3-access-key}'| base64 --decode)
+		 export SECRET_KEY=$(kubectl get secret -n openfaas-fn s3-secret-key -o jsonpath='{.data.s3-secret-key}'| base64 --decode)
 
-+kubectl apply -f $GOPATH/src/github.com/openfaas-incubator/ofc-bootstrap/scripts/minio-sa.yml
- helm install --name cloud-minio --namespace openfaas \
-    --set accessKey="$ACCESS_KEY",secretKey="$SECRET_KEY",replicas=1,persistence.enabled=false,service.port=9000,service.type=NodePort \
-   stable/minio
-```
+		+kubectl apply -f $GOPATH/src/github.com/openfaas-incubator/ofc-bootstrap/scripts/minio-sa.yml
+		 helm install --name cloud-minio --namespace openfaas \
+		    --set accessKey="$ACCESS_KEY",secretKey="$SECRET_KEY",replicas=1,persistence.enabled=false,service.port=9000,service.type=NodePort \
+		   stable/minio
+		```
 
 
 ### Step 3:  Deploy OpenFaaS Cloud
