@@ -8,7 +8,7 @@ _**General Notes:**_
 * _A directory `/<source_root>/` will be referred to in these instructions, this is a temporary writable directory anywhere you'd like to place it._
 
 ### Prerequisites 
- * Docker  
+ * Docker 18.06.2
  * Kubernetes Cluster v1.13.2 Setup
 
 ### Step 1: Install dependencies
@@ -308,7 +308,12 @@ _**General Notes:**_
         ```shell	
 		docker build -f Dockerfile -t gcr.io/kubernetes-helm/tiller:v2.13.1 .
 		```
-
+        ```shell
+		kubectl create clusterrolebinding tiller-cluster-admin \
+ 		   --clusterrole=cluster-admin \
+ 		   --serviceaccount=kube-system:default
+ 		helm init --tiller-image gcr.io/kubernetes-helm/tiller:v2.13.1
+        ```
 *  #### Build the image `openfaas/faas-netes`
 	*   Download the source code
            ```shell
