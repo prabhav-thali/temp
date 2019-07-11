@@ -752,27 +752,28 @@ _**General Notes:**_
 	*	Apply the below patch to `scripts/export-sealed-secret-pubcert.sh`
 		```diff
 		diff --git a/scripts/export-sealed-secret-pubcert.sh b/scripts/export-sealed-secret-pubcert.sh
-		index babee7d..a0793d8 100755
+		index babee7d..d04be16 100755
 		--- a/scripts/export-sealed-secret-pubcert.sh
 		+++ b/scripts/export-sealed-secret-pubcert.sh
-		@@ -10,9 +10,13 @@ then
-		 #    release=$(curl --silent "https://api.github.com/repos/bitnami-labs/sealed-secrets/releases/latest" | sed -n 's/.*"tag_name": *"\([^"]*\)".*/\1/p')
-			 echo "SealedSecrets release: $release"
-		 
-		-    curl -sLSf https://github.com/bitnami/sealed-secrets/releases/download/$release/kubeseal-$GOOS-$GOARCH > kubeseal && \
+		@@ -5,13 +5,14 @@ then
+		     GOOS=$(go env GOOS)
+ 		    GOARCH=$(go env GOARCH)
+
+		-    release=$(curl -sI https://github.com/bitnami-labs/sealed-secrets/releases/latest | grep Location | awk -F
+		+    #release=$(curl -sI https://github.com/bitnami-labs/sealed-secrets/releases/latest | grep Location | awk -
+
+		 #    release=$(curl --silent "https://api.github.com/repos/bitnami-labs/sealed-secrets/releases/latest" | sed
+		     echo "SealedSecrets release: $release"
+		-
+		-    curl -sLSf https://github.com/bitnami/sealed-secrets/releases/download/$release/kubeseal-$GOOS-$GOARCH > k
 		-    chmod +x kubeseal
-		+    #curl -sLSf https://github.com/bitnami/sealed-secrets/releases/download/$release/kubeseal-$GOOS-$GOARCH > kubeseal && \
-		+    #chmod +x kubeseal
 		+    go get -d github.com/bitnami-labs/sealed-secrets/cmd/kubeseal
 		+    cd $GOPATH/src/github.com/bitnami-labs/sealed-secrets/cmd/kubeseal
-		+    git checkout $release 
+		+    git checkout $release
 		+    go build
 		 fi
-		 
-		-./kubeseal --fetch-cert --controller-name=ofc-sealedsecrets-sealed-secrets > tmp/pub-cert.pem && \
-		-  cat tmp/pub-cert.pem
-		+/usr/bin/kubeseal --fetch-cert --controller-name=ofc-sealedsecrets-sealed-secrets > tmp/pubcert.pem && \
-		+  cat tmp/pubcert.pem
+
+ 		./kubeseal --fetch-cert --controller-name=ofc-sealedsecrets-sealed-secrets > tmp/pub-cert.pem && \
 		```
 	*	Apply the below patch to `scripts/install-openfaas.sh`
 		```diff
