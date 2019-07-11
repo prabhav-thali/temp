@@ -588,23 +588,22 @@ _**General Notes:**_
         ```shell
 		cd $GOPATH/src/github.com/openfaas/openfaas-cloud/buildshiprun
 		faas-cli build --image functions/of-buildshiprun:0.11.1 --lang go --handler . --name buildshiprun
-```
+        ```
 	*   Build image `functions/github-event`		
         ```shell
 		cd $GOPATH/src/github.com/openfaas/openfaas-cloud/github-event
 		faas-cli build --image functions/github-event:0.8.0 --lang go --handler . --name github-event
-		
 		```		
 	*   Build image `functions/import-secrets`		
         ```shell	
 		cd $GOPATH/src/github.com/openfaas/openfaas-cloud/import-secrets
 		faas-cli build --image functions/import-secrets:0.3.3 --lang go --handler . --name import-secrets	
-		```
+        ```
 	*   Build image `functions/system-metrics`		
         ```shell
 		cd $GOPATH/src/github.com/openfaas/openfaas-cloud/system-metrics
 		faas-cli build --image functions/system-metrics:0.1.1 --lang go --handler . --name system-metrics		
-   ```
+        ```
 		
 	*   Build image `functions/github-status`		
         ```shell	
@@ -615,12 +614,12 @@ _**General Notes:**_
         ```shell	
 		cd $GOPATH/src/github.com/openfaas/openfaas-cloud/garbage-collect
 		faas-cli build --image functions/garbage-collect:0.4.4 --lang go --handler . --name garbage-collect	
-    ```
+        ```
 	*   Build image `functions/pipeline-log:0.3.3`		
         ```shell
 		cd $GOPATH/src/github.com/openfaas/openfaas-cloud/pipeline-log
 		faas-cli build --image  functions/pipeline-log:0.3.3 --lang go --handler . --name pipeline-log		
-    ```
+        ```
 	*   Build image `functions/github-push`		
         ```shell	
 		cd $GOPATH/src/github.com/openfaas/openfaas-cloud/github-push
