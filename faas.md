@@ -15,7 +15,7 @@ _**General Notes:**_
 
    ```shell
      export SOURCE_ROOT=/<source_root>/
-     yum install -y make curl tar wget git vim
+     yum install -y make curl tar wget git vim patch
    ```
 *    Install Go 1.11.4
 	 ```shell
