@@ -632,7 +632,7 @@ _**General Notes:**_
         ```shell
 		cd $GOPATH/src/github.com/openfaas/openfaas-cloud/list-functions
 		faas-cli build --image functions/list-functions:0.4.7 --lang go --handler . --name list-functions
-			
+		docker tag functions/list-functions:0.4.7 functions/list-functions:0.4.8	
 		```
 	*   Build image `functions/of-cloud-dashboard`		
         ```shell
