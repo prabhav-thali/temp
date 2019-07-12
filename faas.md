@@ -497,7 +497,7 @@ _**General Notes:**_
 			+    tag: "0.24.1"
 			     pullPolicy: IfNotPresent
 			     # www-data -> uid 33
-	runAsUser: 33
+			     runAsUser: 33
 			```
 
 		*	Package the helm charts
