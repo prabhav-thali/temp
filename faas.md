@@ -9,7 +9,7 @@ _**General Notes:**_
 
 ### Prerequisites 
  * Docker 18.06.2
- * Kubernetes Cluster Setup
+ * Kubernetes v1.10 or newer cluster
 
 ### Step 1: Install dependencies
 
