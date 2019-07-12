@@ -495,9 +495,9 @@ _**General Notes:**_
 			     repository: quay.io/kubernetes-ingress-controller/nginx-ingress-controller
 			-    tag: "0.25.0"
 			+    tag: "0.24.1"
-				 pullPolicy: IfNotPresent
-				 # www-data -> uid 33
-				 runAsUser: 33
+			     pullPolicy: IfNotPresent
+			     # www-data -> uid 33
+	runAsUser: 33
 			```
 
 		*	Package the helm charts
