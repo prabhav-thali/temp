@@ -492,7 +492,7 @@ _**General Notes:**_
 			@@ -5,7 +5,7 @@
 			   name: controller
 			   image:
-				 repository: quay.io/kubernetes-ingress-controller/nginx-ingress-controller
+			     repository: quay.io/kubernetes-ingress-controller/nginx-ingress-controller
 			-    tag: "0.25.0"
 			+    tag: "0.24.1"
 				 pullPolicy: IfNotPresent
@@ -844,7 +844,7 @@ _**General Notes:**_
 		--- install-nginx.sh_orig	2019-07-12 00:14:36.146909734 -0400
 		+++ install-nginx.sh	2019-07-12 00:47:41.037009544 -0400
 		@@ -1,4 +1,5 @@
-		#!/bin/bash
+		 #!/bin/bash
 		
 		-echo helm install stable/nginx-ingress --name nginxingress --set rbac.create=true$ADDITIONAL_SET
 		-helm install stable/nginx-ingress --name nginxingress --set rbac.create=true$ADDITIONAL_SET
