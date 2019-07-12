@@ -478,6 +478,35 @@ _**General Notes:**_
 		docker tag quay.io/kubernetes-ingress-controller/nginx-ingress-controller-s390x:0.24.1 quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.24.1
 		```
 
+	*	Customize the `nginx-ingress-controller` helm charts
+		```shell
+		cd $SOURCE_ROOT/nginx-ingress-controller
+		git clone --recursive https://github.com/helm/charts.git
+		cd charts/stable
+		```
+
+		*	Apply the below patch to `nginx-ingress/values.yaml`
+			```diff
+			--- nginx-ingress/values.yaml_orig	2019-07-12 00:07:23.846879737 -0400
+			+++ nginx-ingress/values.yaml	2019-07-12 00:54:20.447029528 -0400
+			@@ -5,7 +5,7 @@
+			   name: controller
+			   image:
+				 repository: quay.io/kubernetes-ingress-controller/nginx-ingress-controller
+			-    tag: "0.25.0"
+			+    tag: "0.24.1"
+				 pullPolicy: IfNotPresent
+				 # www-data -> uid 33
+				 runAsUser: 33
+			```
+
+		*	Package the helm charts
+			```shell
+			helm package nginx-ingress
+    		cp nginx-ingress-1.10.0.tgz $GOPATH/src/github.com/openfaas/faas-netes/docs/
+			```
+    
+
 *  #### Build `kubeseal`
 
    ```shell
@@ -580,7 +609,7 @@ _**General Notes:**_
 		sed -i '4,6d' Dockerfile
 		sed -i '2iCOPY faas-cli /usr/local/bin/faas-cli' Dockerfile
 		sed -i '3iCOPY fwatchdog /usr/bin/fwatchdog' Dockerfile
-		faas-cli build --image  functions/of-git-tar:0.12.2 --lang Dockerfile --handler . --name git-tars 
+		faas-cli build --image  functions/of-git-tar:0.12.2 --lang Dockerfile --handler . --name git-tar
         ```
 	*   Build image `functions/of-buildshiprun`		
         ```shell
@@ -810,7 +839,19 @@ _**General Notes:**_
 		    --set accessKey="$ACCESS_KEY",secretKey="$SECRET_KEY",replicas=1,persistence.enabled=false,service.port=9000,service.type=NodePort \
 		   stable/minio
 		```
-
+	*	Apply the below patch to `scripts/install-nginx.sh`
+		```diff
+		--- install-nginx.sh_orig	2019-07-12 00:14:36.146909734 -0400
+		+++ install-nginx.sh	2019-07-12 00:47:41.037009544 -0400
+		@@ -1,4 +1,5 @@
+		#!/bin/bash
+		
+		-echo helm install stable/nginx-ingress --name nginxingress --set rbac.create=true$ADDITIONAL_SET
+		-helm install stable/nginx-ingress --name nginxingress --set rbac.create=true$ADDITIONAL_SET
+		+echo helm install openfaas/nginx-ingress --name nginxingress --set rbac.create=true$ADDITIONAL_SET
+		+helm repo add openfaas http://127.0.0.1:8879/charts
+		+helm install openfaas/nginx-ingress --name nginxingress --set rbac.create=true$ADDITIONAL_SET
+		```
 
 ### Step 3:  Deploy OpenFaaS Cloud
 
