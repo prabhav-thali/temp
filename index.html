@@ -1,0 +1,715 @@
+<!doctype html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Jenkins Summary</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <style>
+        table,
+        th,
+        td {
+            border: solid 0.5px black;
+            border-collapse:collapse;
+        }
+
+
+        .legendHeadTitle {
+            text-align: center;
+        }
+
+        .legendHeader {
+            font-size: 10px;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+
+        .legendTable {
+            white-space: nowrap;
+            display: table;
+            table-layout: fixed;
+            width: 100%;
+
+         }
+
+        .table-responsive {
+            width: 900px;
+            table-layout: fixed;
+            margin: auto;
+            margin-left: 0px;
+            text-align: center;
+        }
+        .table-responsive tr:nth-child(even) {
+            background-color: rgb(210, 250, 233);
+        }
+
+        .table-responsive tr:nth-child(odd) {
+            background-color: rgb(184, 236, 214);
+        }
+
+        .table-responsive tr:hover {
+            background-color: rgb(94, 158, 241);
+        }
+
+        .table-responsive thead {
+            display: table;
+            width: 100%;
+            width: calc(100% - 16px);
+        }
+
+
+        .table-responsive tbody {
+            height: 80vh;
+            overflow: scroll;
+            overflow-x: hidden;
+            white-space: nowrap;
+            display: block;
+            width: 100%;
+        }
+
+        .table-responsive tr {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+            font-size: 13px;
+        }
+
+        .table-responsive2 tr:nth-child(even) {
+            background-color: rgb(210, 250, 233);
+        }
+
+        .table-responsive2 tr:nth-child(odd) {
+            background-color: rgb(184, 236, 214);
+        }
+
+        .table-responsive2 tr:hover {
+            background-color: rgb(94, 158, 241);
+        }
+
+        .table-responsive2 thead {
+            display: table;
+            width: 100%;
+            width: calc(100% - 18px);
+        }
+
+
+        .table-responsive2 tbody {
+            height: 80vh;
+            overflow: scroll;
+            overflow-x: hidden;
+            white-space: nowrap;
+            display: block;
+            width: 100%;
+        }
+
+        .table-responsive2 tr {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+            font-size: 10px;
+        }
+        .packageHeader {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            background-color: rgb(91, 181, 255);
+        }
+
+        .packageValue {
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .distroTable, .distroTable th{
+            text-align: center;
+            margin-top: 25px;
+            font-size: 13px;
+            border: solid 0.5px black;
+        }
+
+        .darkModeDistroTable, .darkModeDistroTable th{
+            text-align: center;
+            margin-top: 70px;
+            font-size: 13px;
+            border : solid 2px #f0dfdf;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+        input:checked + .slider {
+            background-color: rgb(160, 158, 158);
+        }
+
+        input:focus + .slider {
+            box-shadow: 0 0 1px #2196F3;
+        }
+        input:checked + .slider:before {
+            -webkit-transform: translateX(26px);
+            -ms-transform: translateX(26px);
+            transform: translateX(26px);
+        }
+        .slider.round {
+           border-radius: 34px;
+        }
+        .slider.round:before {
+            border-radius: 50%;
+        }
+        .modal {
+            display:hidden;/* Hidden by default */
+            position: absolute; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            padding-top: 100px; /* Location of the box */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100vh; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 50%;
+            overflow: hidden;
+            height: auto;
+        }
+
+        /* The Close Button */
+        .close {
+            color: #aaaaaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close2 {
+            color: #000000;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close2:hover,
+        .close2:focus {
+            color: rgb(190, 157, 157);
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .displayEntireContainer {
+            display: none;
+            position: absolute;
+            z-index: 1;
+            left: 30px;
+            top: 0;
+            width: 95%;
+            height: 100%;
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+
+        .bottomright {
+            position: absolute;
+            bottom: 8px;
+            right: 50px;
+            font-size: 18px;
+         }
+
+         .table-wrapper {
+background: #fff;
+padding: 20px 25px;
+margin: 30px 0;
+border-radius: 3px;
+box-shadow: 0 1px 1px rgba(0,0,0,.05);
+}
+.table-title {
+padding-bottom: 15px;
+background: #435d7d;
+color: #fff;
+padding: 16px 30px;
+margin: -20px -25px 10px;
+border-radius: 3px 3px 0 0;
+}
+.table-title h3 {
+margin: 5px 0 0;
+font-size: 24px;
+}
+.table-title .btn-group {
+float: right;
+}
+.table-title .btn {
+color: #fff;
+float: right;
+font-size: 13px;
+border: none;
+min-width: 50px;
+border-radius: 2px;
+border: none;
+outline: none !important;
+margin-left: 10px;
+}
+.table-title .btn i {
+float: left;
+font-size: 21px;
+margin-right: 5px;
+}
+.table-title .btn span {
+float: left;
+margin-top: 2px;
+}
+table.table tr th, table.table tr td {
+border-color: #e9e9e9;
+padding: 12px 15px;
+vertical-align: middle;
+}
+table.table tr th:first-child {
+width: 60px;
+}
+table.table tr th:last-child {
+width: 100px;
+}
+table.table-striped tbody tr:nth-of-type(odd) {
+background-color: #fcfcfc;
+}
+table.table-striped.table-hover tbody tr:hover {
+background: #f5f5f5;
+}
+table.table th i {
+font-size: 13px;
+margin: 0 5px;
+cursor: pointer;
+}
+table.table td:last-child i {
+opacity: 0.9;
+font-size: 22px;
+margin: 0 5px;
+}
+table.table td a {
+font-weight: bold;
+color: #566787;
+display: inline-block;
+text-decoration: none;
+outline: none !important;
+}
+table.table td a:hover {
+color: #2196F3;
+}
+table.table td a.edit {
+color: #FFC107;
+}
+table.table td a.delete {
+color: #F44336;
+}
+table.table td i {
+font-size: 19px;
+}
+table.table .avatar {
+border-radius: 50%;
+vertical-align: middle;
+margin-right: 10px;
+}
+
+.custom-button {
+            outline: none;
+            padding: 12px;
+            border: none;
+
+            border-radius: 8px;
+
+            cursor: pointer;
+            background: #435d7d;
+color: #fff;
+}
+.btn-container {
+            text-align: right;
+        }
+.hint-text {
+float: left;
+margin-top: 10px;
+font-size: 13px;
+}
+/* Custom checkbox */
+.custom-checkbox {
+position: relative;
+}
+.custom-checkbox input[type="checkbox"] {
+opacity: 0;
+position: absolute;
+margin: 5px 0 0 3px;
+z-index: 9;
+}
+.custom-checkbox label:before{
+width: 18px;
+height: 18px;
+}
+.custom-checkbox label:before {
+content: '';
+margin-right: 10px;
+display: inline-block;
+vertical-align: text-top;
+background: white;
+border: 1px solid #bbb;
+border-radius: 2px;
+box-sizing: border-box;
+z-index: 2;
+}
+.custom-checkbox input[type="checkbox"]:checked + label:after {
+content: '';
+position: absolute;
+left: 6px;
+top: 3px;
+width: 6px;
+height: 11px;
+border: solid #000;
+border-width: 0 3px 3px 0;
+transform: inherit;
+z-index: 3;
+transform: rotateZ(45deg);
+}
+.custom-checkbox input[type="checkbox"]:checked + label:before {
+border-color: #03A9F4;
+background: #03A9F4;
+}
+.custom-checkbox input[type="checkbox"]:checked + label:after {
+border-color: #fff;
+}
+.custom-checkbox input[type="checkbox"]:disabled + label:before {
+color: #b8b8b8;
+cursor: auto;
+box-shadow: none;
+background: #ddd;
+}
+/* Modal styles */
+.modal .modal-dialog {
+max-width: 400px;
+}
+.modal .modal-header, .modal .modal-body, .modal .modal-footer {
+padding: 20px 30px;
+}
+.modal .modal-content {
+border-radius: 3px;
+}
+.modal .modal-footer {
+background: #ecf0f1;
+border-radius: 0 0 3px 3px;
+}
+.modal .modal-title {
+display: inline-block;
+}
+.modal .form-control {
+border-radius: 2px;
+box-shadow: none;
+border-color: #dddddd;
+}
+.modal textarea.form-control {
+resize: vertical;
+}
+.modal .btn {
+border-radius: 2px;
+min-width: 100px;
+}
+.modal form label {
+font-weight: normal;
+}
+    </style>
+</head>
+
+<body>
+    <div class="col" id="mainContainer" style=" position: absolute; top: 0px; height: 100vh; width: 100%; background-image: linear-gradient(rgb(184, 236, 214) , rgb(76, 63, 150));">
+        <div style="text-align: right; ">
+            <button onclick="document.getElementById('id01').style.display='block'" style="width: auto; margin-right: 20px; float: right;" id="mainLoginBtn">Login</button>
+            <button style="width: auto; float: right; display: none;" id="mainLogoutBtn">Logout</button>
+            <p style="display: none; float: right;" id="welcomeUser"></p>
+        </div>
+        <div id="id01" class="modal" style="text-align: center;">
+            <div class="modal-content animate">
+                <div class="imgcontainer">
+                <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+                </div>
+                <div class="container">
+                <h1>Login</h1>
+                <div id="message" style="color: red;"></div>
+                <input type="text" placeholder="Enter Username" id="uname" name="uname" required>
+                <br/><br/>
+                <input type="password" placeholder="Enter Password" id="psw" name="psw" required>
+                <br/><br/>
+                <button type="submit" name="loginBtn" id="loginBtn">Login</button>
+                </div>
+            </div>
+        </div>
+        <div id="contentContainer" class="container" id="root" style="background-image: linear-gradient(rgb(184, 236, 214) , rgb(76, 63, 150));">
+            <div class="row">
+                <div class="col" id="mainTitle"></div>
+                <div class="col" id="legendTable">
+                     <!-- <div class="darkSwitch" style="float: right;"><label class="switch"><input type="checkbox" id="darkModeSwitch" onclick="activateDarkMode()"><span class= "slider round"></span></label></div> -->
+                </div>
+            </div>
+            <div class="row" style="margin-top: 10px; margin-left: -90px; margin-right: -90px">
+                <div class="col-8 table-responsive" id="packageContainer">
+                    <table class="responsive-table" id="packageTable">
+                        <thead onclick="sortTable(4)"id="packageTableHeader"></thead>
+                        <tbody id="packageTableBody"></tbody>
+                    </table>
+                </div>
+                <div id="myModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close" id="closeBtn" onclick="closeModal()">&times;</span>
+                        <p id="changePackageName" style="font-weight: bold; font-size: 15px; text-align: center;"></p>
+                        <p id="previousComment" style="font-size: 15px; display: none;">Old Comment: </p>
+                        <p style="font-size: 15px;">Comment:</p><input type="text" id="newComment" placeholder="Enter New Comment" value="" style="font-size: 15px;">
+<!--                        <script type="text/javascript">
+//$(document).ready(function(){
+//// Activate tooltip
+//$('[data-toggle="tooltip"]').tooltip();
+//// Select/Deselect checkboxes
+//var checkbox = $('table tbody input[type="checkbox"]');
+//$("#selectAll").click(function(){
+//if(this.checked){
+//checkbox.each(function(){
+//this.checked = true;
+//});
+//} else{
+//checkbox.each(function(){
+//this.checked = false;
+//});
+//}
+//});
+//checkbox.click(function(){
+//if(!this.checked){
+//$("#selectAll").prop("checked", false);
+//}
+//});
+//});
+</script>
+</head>
+<body>--!>
+<div class="container">
+<div class="table-wrapper">
+<div class="table-title">
+<div class="row">
+<div class="col-sm-6">
+<h3>Manage Comments</h3>
+</div>
+<div class="col-sm-6">
+<button onclick="document.getElementById('id001').style.display='block'" class="btn btn-success">Add Comment</button>
+</div>
+</div>
+</div>
+<table class="table table-striped table-hover" id="data-table" style="table-layout: fixed;">
+<thead>
+<tr>
+<th style="width:110px">Date</th>
+<th>Comment</th>
+<th>Author</th>
+<th>Actions</th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+<div class="clearfix">
+<div id="pagination" class="btn-container">
+  <button class="custom-button" id="prev-page" hidden>Newer</button>
+  <button class="custom-button" id="next-page" hidden>Older</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Edit my modal -->
+<div id="id001" class="w3-modal">
+    <div class="w3-modal-content">
+    <div class="w3-container">
+    <form id="comment-form">
+    <div class="modal-header">
+    <h4 class="modal-title">Add Comment</h4>
+    <button type="button" onclick="document.getElementById('id001').style.display='none'" class="w3-button w3-display-topright" data-toggle="modal" aria-hidden="true">&times;</button>
+    </div>
+    <div class="modal-body">
+    <div class="form-group">
+    <label>Date</label>
+    <input type="date" id="comment_date" class="form-control" required>
+    </div>
+    <div class="form-group">
+    <label>Comment</label>
+    <textarea class="form-control" id="comment_comment" required></textarea>
+    </div>
+   </div>
+    <div class="modal-footer">
+    <button onclick="document.getElementById('id001').style.display='none'" type="button" class="w3-button w3-red">Cancel</button>
+    <input type="submit" class="btn btn-success" value="Add" id="comment-submit" onclick="document.getElementById('id001').style.display='none'"/>
+    </div>
+    </form>
+      </div>
+    </div>
+  </div>
+
+<!-- Updated existing comment --!>
+<!-- Edit my modal -->
+<div id="id002" class="w3-modal">
+    <div class="w3-modal-content">
+    <div class="w3-container">
+    <form id="update-comment-form">
+    <div class="modal-header">
+    <h4 class="modal-title">Update Comment</h4>
+    <button type="button" onclick="document.getElementById('id002').style.display='none'" class="w3-button w3-display-topright" data-toggle="modal" aria-hidden="true">&times;</button>
+    </div>
+    <div class="modal-body">
+    <div class="form-group">
+    <label>Date</label>
+    <input type="text" id="editDate" class="form-control" required>
+    </div>
+    <div class="form-group">
+    <label>Comment</label>
+    <textarea class="form-control" id="editComment" required></textarea>
+    </div>
+    </div>
+    <div class="modal-footer">
+    <button onclick="document.getElementById('id002').style.display='none'" type="button" class="w3-button w3-red">Cancel</button>
+    <input type="submit" class="btn btn-success" value="Update" id="update-comment-submit"  onclick="document.getElementById('id002').style.display='none'"/>
+    </div>
+    </form>
+    </div>
+    </div>
+  </div>
+
+<!-- Modal for confirming deletion -->
+<div id="deleteModal" class="w3-modal">
+    <div class="w3-modal-content">
+            <div class="w3-container">
+                            <div class="modal-header">
+                                    <h2 class="modal-title">Delete Confirmation</h2>
+                                    <span class="close" onclick="closeDeleteModal()">&times;</span>
+                            </div>
+                            <div class="modal-body">
+                                    <p>Are you sure you want to delete this row?</p>
+                            </div>
+                            <div class="modal-footer">
+                                    <button onclick="document.getElementById('deleteModal').style.display='none'" type="button" class="w3-button w3-red">Cancel</button>
+                                    <button class="btn btn-success" onclick="confirmDelete()">Yes, Delete</button>
+                            </div>
+            </div>
+    </div>
+</div>
+                        <br/>
+                        <p id="previousImageSize" style="font-size: 15px; display: none;">Old Image Size: </p>
+                        <p style="font-size: 15px; display: none;" id="imageLabel"><br/>Image:</p><input type="text" id="newImageSize" placeholder="Enter New Image Size" value="" style="font-size: 15px; display: none;">
+                        <br/>
+                        <input type="checkbox" id="previousRecipeBroken" style="display: none;">
+                        <div id="recipeBrokenContainer" style="display: none;"><input type="checkbox" id ="recipeBroken">Recipe Broken</div>
+                        <input type="checkbox" id="previousDockerBroken" style="display: none;">
+                        <div id="dockerBrokenContainer" style="display: none; float: right;"><input type="checkbox" id ="dockerBroken">Docker Broken</div>
+                                    <input type="checkbox" id="previousImageBroken" style="display: none;">
+                            <div id="imageBrokenContainer" style="display: none;"><input type="checkbox" id ="imageBroken">Image Broken</div>
+                                <input type="checkbox" id="previousBinaryBroken" style="display: none;">
+                                    <div id="binaryBrokenContainer" style="display: none; float: right;"><input type="checkbox" id ="binaryBroken">Binary Broken</div>
+                                    <div style="text-align: center;"><input type="submit" value="Submit" onclick="saveContent()" style="width: 30%; overflow: hidden"></div>
+                    </div>
+                </div>
+		                <!-- Not loged in user  modal !-->
+                <div id="myModal_not_loggedin" class="modal">
+                    <div class="modal-content">
+                        <span class="close" id="closeBtn" onclick="closeModal_not_loggedin()">&times;</span>
+                        <p id="changePackageName1" style="font-weight: bold;font-size: 15px; text-align: center; padding: 10px 10px">
+                        </p>
+				    <p id="summary" style="color: black;font-size: 15px;"></p>
+                                    <table class="table table-striped table-hover" id="data-table1" hidden style="table-layout: fixed;">
+                                        <thead>
+                                            <tr>
+                                                <th  style="width:110px">Date</th>
+                                                <th>Comment</th>
+                                                <th>Author</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                    <div class="clearfix">
+                                        <div id="pagination" class="btn-container">
+                                            <button class="custom-button" id="prev-page1" hidden>Newer</button>
+                                            <button class="custom-button" id="next-page1" hidden>Older</button>
+                                        </div>
+                                    </div>
+                    </div>
+                </div>
+		<div id="dateTooltip" style="display: none; position: absolute; background-color: #f9f9f9; border: 1px solid #ccc; padding: 5px;"></div>
+                <div class="col" id="distroContainer" style="text-align: center;">
+                    <div id="myDistroModal" class="modal" style=" height: 80%;">
+                        <div class="modal-content" style="width: 70%; display: block;">
+                            <span class="close" id="closeBtn" onclick="document.getElementById('myDistroModal').style.display='none'">&times;</span>
+                            <p id="distroColor" style="display: none;"></p>
+                            <p id="distroPkgName" style="display: none;"></p>
+                            <p id="distroName" style="display: none;"></p>
+                            <br/><br/>
+                            <p id="unavailMsg"></p>
+                            <div style="text-align: center;"><input type="submit" value="OK" id = "updateBtn" style="width: 30%; overflow: hidden"></div>
+                        </div>
+                    </div>
+                    <div id="deleteRSModal" class="modal" style=" height: 80%;">
+                        <div class="modal-content" style="width: 70%; display: block;">
+                            <span class="close" id="closeBtn" onclick="document.getElementById('deleteRSModal').style.display='none'">&times;</span>
+                            <p id="deleteRSPkgName" style="display: none;"></p>
+                            <br/><br/>
+                            <p id="deleteRSMsg"></p>
+                            <p id="deleteRorS" style="display: none;"></p>
+                            <div style="text-align: center; margin-left: 100px;"><input type="submit" value="OK" id = "deleteRSBtn" style="width: 30%; overflow: hidden"></div>
+                        </div>
+                    </div>
+                    <div class="bottomright"><p><a href="http://ps31.fyre.ibm.com:8080/job/TestLinks"><img src="http://ps31.fyre.ibm.com:8080/job/TestLinks/badge/icon?style=plastic&subject=Download%20Links" alt='Build Status' width='150' height='25'/></a></p></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col" id="entireContainer" style="display:none; position: absolute; top: 0px; height: 100vh; width: 100%; background-image: linear-gradient(rgb(184, 236, 214) , rgb(76, 63, 150));">
+        <div id="displayEntireContainer" class="displayEntireContainer table-responsive">
+            <span class="close2" id="closeDisplayBtn" onclick="closeEntireContainer()">&times;<span>
+        </div>
+    </div>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
+
